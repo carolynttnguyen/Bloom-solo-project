@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+      crossorigin="anonymous"
+    />
+    <title>Register</title>
+  </head>
+
+  <body>
+    <h2 class="display-5"></h2>
+    <header class="card">
+      <div>
+        With such a progressive society, 2021 has become a year that's been
+        deemed the year full of self growth & self love, for countless people.
+        Bloom realizes social media platforms can also be a place for judgment
+        and negativity at times. Have no fear though, there is a community of
+        supportive people, who are also on their own personal growth journey
+        that want to document and post freely without hateful comments, or a
+        judgement free zone. Bloom welcomes Users who are cruising on their self
+        growth journey, to document it, while being in and being a part of
+        supportive community.
+      </div>
+    </header>
+
+    <!-- container for user info  -->
+    <div class="container-fluid">
+      <h4 class="display-6">Join the Bloom Team</h4>
+
+      <form action="/create_user" method="post">
+        {% csrf_token %}
+
+        <div class="col-sm">
+          <label for="first-name">First Name</label>
+          <input type="text" name="first-name" />
+        </div>
+
+        <div class="col-sm">
+          <label for="last-name">Last Name</label>
+          <input type="text" name="last-name" />
+        </div>
+
+        <div class="col-sm">
+          <label for="email">Email</label>
+          <input type="email" name="email" />
+        </div>
+
+        <div class="col-sm">
+          <label for="username">Username</label>
+          <input type="username" name="username" />
+        </div>
+
+        <div class="col-sm">
+          <label for="pw">Password</label>
+          <input type="password" name="password" />
+        </div>
+
+        <div class="col-sm">
+            <label for="confirm-pw">Confirm Password</label>
+            <input type="password" name="confirm-pw" />
+          </div>
+  
+
+        <div class="col">
+          <label for="reason">Name one Goal you are working on, or a reason you are joining.</label>
+          <textarea name="reason" cols="30" rows="10"></textarea>
+        </div>
+
+        <div class="col">
+            <label for="reason">What is a Quote that resonates with you daily, or keeps you going?</label>
+            <textarea name="quote" cols="30" rows="10"></textarea>
+          </div>
+
+        <input type="button" value="Join" />
+      </form>
+    </div>
+  </body>
+</html>
