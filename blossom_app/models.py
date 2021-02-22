@@ -2,13 +2,23 @@ from django.db import models
 import re
 import bcrypt
 
-
 class UserManager(models.Manager):
-    def IndexValidator(self, RegData):
+    def LoginValidator(self, LogData):
+        errors={}
+        # Login Error Messages
+        if len(LogData['log_username']) < 5:
+            errors['log_username'] = 'Please input a valid Username.'
+        # if LogData['log_username'] != 
+        if len(LogData['log_password']) < 8:
+            errors['log_password'] = 'Please input a valid Password.'
+        return errors
+    
+    def RegistrationValidator(self, RegData):
         errors = {}
         EMAIL_REGEX = re.compile( r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
+        # Registration error messages
         # first name
-        if len(RegData['first_name'] < 2):
+        if len(RegData['first_name']) < 2:
             errors['first_name']= 'First Name must be at least 2 characters.'
         # last name
         if len(RegData['last_name']) < 2:
@@ -26,12 +36,12 @@ class UserManager(models.Manager):
         if RegData['password'] != RegData['confirm_pw']:
             errors['confirm_pw'] = 'Passwords do not match!!!'
         # quote
-        if len(RegData['quote']) < 1:
-            errors['quote'] = 'A quote must be provided for in order to register.'
+        if len(RegData['personal_quote']) < 1:
+            errors['personal_quote'] = 'A quote must be provided to register.'
         # reason
-        if len(RegData['reason']) < 1:
-            errors['reason'] = 'Your reason for joining must be provided for in order to register.'
-
+        if len(RegData['reasons']) < 1:
+            errors['reasons'] = 'Your reason for joining must be provided for in order to register.'
+        return errors
 
 
 class Users (models.Model):
@@ -42,7 +52,7 @@ class Users (models.Model):
     password =  models.CharField(max_length=70)
     reasons = models.TextField()
     personal_quote = models.TextField()
-    objects = UserManager
+    objects = UserManager()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now = True)
     #friends = list of friends user has

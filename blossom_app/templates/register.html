@@ -1,84 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
-      crossorigin="anonymous"
-    />
-    <title>Register</title>
-  </head>
 
-  <body>
-    <h2 class="display-5"></h2>
-    <header class="card">
-      <div>
-        With such a progressive society, 2021 has become a year that's been
-        deemed the year full of self growth & self love, for countless people.
-        Bloom realizes social media platforms can also be a place for judgment
-        and negativity at times. Have no fear though, there is a community of
-        supportive people, who are also on their own personal growth journey
-        that want to document and post freely without hateful comments, or a
-        judgement free zone. Bloom welcomes Users who are cruising on their self
-        growth journey, to document it, while being in and being a part of
-        supportive community.
-      </div>
-    </header>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
+  <title>Register</title>
+</head>
 
-    <!-- container for user info  -->
-    <div class="container-fluid">
-      <h4 class="display-6">Join the Bloom Team</h4>
-
-      <form action="/create_user" method="post">
-        {% csrf_token %}
-
-        <div class="col-sm">
-          <label for="first-name">First Name</label>
-          <input type="text" name="first-name" />
-        </div>
-
-        <div class="col-sm">
-          <label for="last-name">Last Name</label>
-          <input type="text" name="last-name" />
-        </div>
-
-        <div class="col-sm">
-          <label for="email">Email</label>
-          <input type="email" name="email" />
-        </div>
-
-        <div class="col-sm">
-          <label for="username">Username</label>
-          <input type="username" name="username" />
-        </div>
-
-        <div class="col-sm">
-          <label for="pw">Password</label>
-          <input type="password" name="password" />
-        </div>
-
-        <div class="col-sm">
-            <label for="confirm-pw">Confirm Password</label>
-            <input type="password" name="confirm-pw" />
-          </div>
-  
-
-        <div class="col">
-          <label for="reason">Name one Goal you are working on, or a reason you are joining.</label>
-          <textarea name="reason" cols="30" rows="10"></textarea>
-        </div>
-
-        <div class="col">
-            <label for="reason">What is a Quote that resonates with you daily, or keeps you going?</label>
-            <textarea name="quote" cols="30" rows="10"></textarea>
-          </div>
-
-        <input type="button" value="Join" />
-      </form>
+<body>
+  <header class="card d-flex p-3 mt-2 mx-auto  bg-warning" style="width: 85%">
+    <div>
+      With such a progressive society, 2021 has become a year that's been
+      deemed the year full of self growth & self love, for countless people.
+      Bloom realizes social media platforms can also be a place for judgment
+      and negativity at times. Have no fear though, there is a community of
+      supportive people, who are also on their own personal growth journey
+      that want to document and post freely without hateful comments, or a
+      judgement free zone. Bloom welcomes Users who are cruising on their self
+      growth journey, to document it, while being in and being a part of
+      supportive community.
     </div>
-  </body>
+  </header>
+
+  <!-- container for user info  -->
+  <div class="container-fluid">
+    <h4 class="display-6 mt-2 mx-auto">Join the Bloom Team</h4>
+
+    <!-- errors message -->
+    {% if messages %}
+    <ul>
+      {% for message in messages%}
+      <li {% if messages.tags %} class="{{messages.tags}}" {% endif %}>
+        {{message}}
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    <!-- registration form -->
+    <form action="/create_user" method="post">
+      {% csrf_token %}
+      <!-- start of row 1 -->
+      <div class="row my-4">
+
+        <div class="form-group col col-md-4">
+          <label for="first-name">First Name</label>
+          <input class="form-control" placeholder="First Name" type="text" name="first_name" />
+        </div>
+
+        <div class="form-group col col-md-4">
+          <label for="last-name">Last Name</label>
+          <input class="form-control" placeholder="Last Name" type="text" name="last_name" />
+        </div>
+
+
+        <div class="form-group col col-md-4">
+          <label for="email">Email</label>
+          <input  class="form-control" placeholder="Email" type="email" name="email"/>
+        </div>
+
+      </div>
+      <!-- end of row 1 -->
+
+      <!-- start of row 2 -->
+      <div class="row my-6">
+
+        <div class="form-group col col-md-4">
+          <label for="username">Username</label>
+          <input class="form-control" placeholder="Username" type="username" name="username" />
+        </div>
+
+        <div class="form-group col col-md-4">
+          <label for="pw">Password</label>
+          <input class="form-control" placeholder="Password" type="password" name="password" />
+          <small class="form-text text-muted">Password must be at least 8 Characters.</small>
+        </div>
+
+        <div class="form-group col col-md-4">
+          <label for="confirm-pw">Confirm Password</label>
+          <input class="form-control" placeholder="Confirm password" type="password" name="confirm_pw" />
+        </div>
+        
+      </div>
+      <!-- end of row 2 -->
+
+      <!-- start of row 3 -->
+      <div class="row my-5">
+        <div class="form-group col mx-auto">
+          <label for="reason">Name one Goal you are working on, or a reason you are joining.</label>
+          <textarea class="form-control" rows="4" placeholder="This Goal you are working towards will be displayed on you BloomBoard and set as a reminder that you are doing something for yourself." name="reasons" cols="30" rows="10"></textarea>
+        </div>
+
+      </div>
+      <!-- end of row 3 -->
+
+      <!-- start of row 4 -->
+      <div class="row my-5">
+        <div class="form-group col mx-auto">
+          <label for="personal_quote">Come up with your own personal quote that resonates with you</label>
+          <textarea class="form-control" rows="4" placeholder="What's a quote that's always resonated with you? One that helps motivate you, and then make it your own. Inspire yourself." name="personal_quote" cols="30" rows="10"></textarea>
+        </div>
+
+      </div>
+      <!-- end of row 4 -->
+
+      <input type="submit" class="btn btn-secondary active" value="Ready Let's Go" />
+
+    </form>
+  </div>
+</body>
+
 </html>

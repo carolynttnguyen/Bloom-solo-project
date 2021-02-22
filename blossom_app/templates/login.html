@@ -13,22 +13,33 @@
 
         <h2 class="display-6">Login</h2>
 
+         <!-- errors message -->
+         {% if messages %}
+         <ul>
+             {% for error in messages%}
+             <li>{{error}}</li>
+             {% endfor %}
+         </ul>
+         {% endif %}
+    
+
+        <!-- login form  -->
         <form action="/login" method="post">
             {% csrf_token %}
-            <div class="col-sm"> 
+            <div class="form-group"> 
                 <label for="username">Username</label>
-                <input type="username" name="username">
+                <input type="text" name="log_username">
             </div>
 
-            <div class="col-sm"> 
+            <div class="form-group">
                 <label for="pw">Password</label>
-                <input type="password" name="password">
+                <input type="password" name="log_password">
     
             </div>
 
             <a href="/register">Not a User? Click to Register</a> <br>
 
-            <input type="button" value="Login">
+            <input type="submit" class="btn btn-success" value="Login">
         </form>
 
     </div>

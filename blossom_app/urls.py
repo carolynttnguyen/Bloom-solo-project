@@ -10,7 +10,7 @@ urlpatterns = [
     path('checklist', views.show_checklist),
     path('user_rules', views.rules),
     path('journal_entry', views.journal_entry),
-    path('quote', views.quote),
-    path('flick', views.flick),
+    path('create_quote', views.create_quote),
+    path('post_pic', views.post_pic),
     path('logout', views.logout)
 ]
