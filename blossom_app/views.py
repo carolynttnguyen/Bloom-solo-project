@@ -71,34 +71,96 @@ def create_user(request):
 
 def show_bloomboard(request):
     # fetch User's personal data - reason, quote, post
-    current_user = Users.objects.get(id=request.session['user_id'])
-
     # fetch user's friends data- all post 
-    context = {
-        'current_user': current_user,
-    }
-    return render(request, 'bloomboard.html', context)
+    if request.method =="GET":
+        current_user = Users.objects.get(id=request.session['user_id'])
+        context = {
+            'current_user': current_user,
+            # 'current_user_entries': Journal_Entires.objects.filter(user=current_user),
+            # 'current_user_quotes': Quotes.objects.filter(user=current_user),
+            # 'user_friends': Friends.objects.filter(user=current_user),
+            'entries': Journal_Entires.objects.all().order_by("-created_at"),
+            # 'quotes': Quotes.objects.all().filter("-created_at")
+            }
+        return render(request, 'bloomboard.html', context)
 
+def profile(request):
+    if request.method=="GET":
+        # users-quotes, journal entries, rules, regulators, reason
+        context = {
+            
+        }
+    return render(request, 'bloom_profile.html', context)
 
-
-
-
-
+def edit_profile(request):
+    if request.method =='GET':
+        context = {}
+        return render(request, 'edit_profile.html', context)
+    else:
+        # update & save changes rules, regulators, quote, reason, rules
+        return redirect('/profile')
 
 def show_checklist(request):
-    pass
+    if request.method =='GET':
+        context = {
+            'current_user':Users.objects.get(id=request.session['user_id']),
+            'goals': Goals.objects.filter(user=request.session['user_id']),
+            'intentions': Intentions.objects.filter(user= request.session['user_id'])
+        }
+    return render(request, 'checklist.html', context)
 
-def rules(request):
-    pass
+def rules(request, userId): 
+    # grab other users id, ad redirects to their profile
+    context = {}
+    return render(request, 'profile.html, context')
 
 def journal_entry(request):
-    pass
+    if request.method =='POST':
+        new_intention = Journal_Entries.objects.create(
+            entry = request.POST['entry'],
+            user = Users.objects.get(id = request.session['user_id'])
+        )
+        return redirect('/bloomboard')
+    return redirect('/bloomboard')
 
 def create_quote(request):
-    pass
+    if request.method =='POST':
+        new_intention = Quotes.objects.create(
+            the_quote = request.POST['quote'],
+            quote_author = request.POST['author'],
+            user = Users.objects.get(id=request.session['user_id'])
+        )
+        return redirect('/bloomboard')
+    return redirect('/bloomboard')
 
-def post_pic(request):
-    pass
+def delete_intention(request, intentId):
+    to_be_deleted = Intentions.objects.get(id=intentId)
+    to_be_deleted.delete()
+    return redirect('/checklist')
+
+def add_intention(request):
+    if request.method =='POST':
+        new_intention = Intentions.objects.create(
+            intention = request.POST['intention'],
+            user = Users.objects.get(id=request.session['user_id'])
+        )
+        
+        return redirect('/checklist')
+    return redirect('/checklist')
+
+def add_goal(request):
+    if request.method =='POST':
+        new_intention = Goals.objects.create(
+            goal = request.POST['goal'],
+            user = Users.objects.get(id=request.session['user_id'])
+        )
+        return redirect('/checklist')
+    return redirect('/checklist')
+
+def delete_goal(request, goalId):
+    delete_goal= Goals.objects.get(id=goalId)
+    delete_goal.delete()
+    return redirect('/checklist')
 
 def logout(request):
     request.session.clear()

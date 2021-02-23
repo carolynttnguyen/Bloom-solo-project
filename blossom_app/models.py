@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 import re
 import bcrypt
 
@@ -52,16 +53,25 @@ class Users (models.Model):
     password =  models.CharField(max_length=70)
     reasons = models.TextField()
     personal_quote = models.TextField()
+    # avatar = models.ImageField(default='default.jpg', upload_to='profile_pics')
     objects = UserManager()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now = True)
     #friends = list of friends user has
     #regulators
 
-class Friends(models.Model):
-    user = models.ForeignKey(Users, related_name='friends', on_delete=models.CASCADE)
+
+class Chat_rules(models.Model):
+    rulecreator = models.ForeignKey(Users, related_name='chat_rules', on_delete=models.CASCADE)
+    rule = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now = True)
+    
+
+# class Friends(models.Model):
+#     user = models.ForeignKey(Users, related_name='friends', on_delete=models.CASCADE)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now = True)
 
 
 class Regulators(models.Model):
@@ -76,13 +86,15 @@ class Journal_Entires(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now = True)
 
-class Pictures(models.Model):
-    picture = models.ImageField(upload_to=None, height_field=None, width_field=None, max_length=100)
-    user = models.ForeignKey(Users, related_name='picture', on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now = True)
+# class Pictures(models.Model):
+#     picture = models.ImageField(upload_to=None, height_field=None, width_field=None, max_length=100)
+#     user = models.ForeignKey(Users, related_name='picture', on_delete=models.CASCADE)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now = True)
 
 class Quotes(models.Model):
+    the_quote = models.TextField(null=True)
+    quote_author = models.CharField(max_length=200, null=True)
     user = models.ForeignKey(Users, related_name='quote', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now = True)
@@ -93,6 +105,11 @@ class Goals (models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now = True)
 
+class Intentions (models.Model):
+    intention = models.TextField()
+    user = models.ForeignKey(Users, related_name='intention', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now = True)
 
 class Comments(models.Model):
     user = models.ForeignKey(Users, related_name='comment', on_delete=models.CASCADE)
