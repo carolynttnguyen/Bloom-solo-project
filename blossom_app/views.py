@@ -85,15 +85,15 @@ def show_bloomboard(request):
         }
     return render(request, 'bloomboard.html', context)
 
-def profile(request, userId):
+def profile(request):
     if request.method =="GET":
         # users-quotes, journal entries, rules, regulators, reason
-        current_user = Users.objects.get(id=userId)
+        current_user = Users.objects.get(id=request.session['user_id'])
         context = {
             'quotes': Quotes.objects.filter(user=current_user ),
             'journal_entries':Journal_Entires.objects.filter(user=current_user ),
-            'rules': Chat_rules.objects.filter(rulecreator=current_user ),
-            'regulators': Regulators.objects.filter(user=current_user ),
+            # 'rules': Chat_rules.objects.filter(rulecreator=current_user ),
+            # 'regulators': Regulators.objects.filter(user=current_user ),
             'user': current_user 
         }
         return render(request, 'bloom_profile.html', context)
@@ -105,14 +105,35 @@ def edit_profile(request, userId):
         context = {
             'quotes': Quotes.objects.filter(user=current_user ),
             'journal_entries':Journal_Entires.objects.filter(user=current_user ),
-            'rules': Chat_rules.objects.filter(rulecreator=current_user ),
-            'regulators': Regulators.objects.filter(user=current_user ),
+            # 'rules': Chat_rules.objects.filter(rulecreator=current_user ),
+            # 'regulators': Regulators.objects.filter(user=current_user ),
             'user': current_user 
         }
         return render(request, 'edit_profile.html', context)
-    else:
-        # update & save changes rules, regulators, quote, reason, rules
+    
+    # update & save changes rules, regulators, quote, reason, rules
+    log_user = Users.objects.get(id=userId)
+    log_user.username = request.POST['updated_username']
+    log_user.save()
+    return redirect('/profile')
+
+def edit_entry(request, entryId, userId):
+    if request.method=='POST':
+        updated_entry = Journal_Entires.objects.get(id=entryId)
+        updated_entry.entry = request.POST['updated_entry']
+        updated_entry.save()
+        return redirect('/profile/{{userId}}')
+    return redirect('/profile/{{userId}}')
+
+def edit_quote(request, quoteId):
+    if request.method=='GET':
         return redirect('/profile')
+    updated_quote = Quotes.objects.get(id=quoteId)
+    updated_quote.the_quote = request.POST['updated_quote']
+    updated_quote.the_quote = request.POST['updated_quote_author']
+    updated_quote.save()
+    return redirect('/profile')
+    
 
 def show_checklist(request):
     if request.method =='GET':

@@ -262,117 +262,119 @@
     <div class="container-fluid">
         <div class="row p-1 mx-auto ">
             <!-- column for user info, add buttons, regulators -->
-            <div class="col-3 m-1" >
+            <div class="col-2 m-1 text-center">
 
                 <!-- basic user info -->
-                <div class="col text-center">
-                    <h1 class="display-6">{{user.username}}</h1>
-                    <button type="button" class="btn btn-warning m-3">
-                        <a href="/add_regulator">
-                            <span title="Add as a Regulator" class="material-icons" style="color: black">group</span>
-                        </a>
-                    </button>
 
-                    <button type="button" class="btn btn-warning m-3">
+                <h1 class="display-6">{{user.username}}</h1>
+                <!-- <button type="button" class="btn btn-warning m-3">
+                    <a href="/add_regulator">
+                        <span title="Add as a Regulator" class="material-icons" style="color: black">group</span>
+                    </a>
+                </button> -->
+
+                <!-- <button type="button" class="btn btn-warning m-3">
                         <a href="/add_friend">
                             <span title="Add Friend" class="material-icons" style="color: black">person_add</span>
                         </a>
-                    </button>
+                    </button> -->
 
-                    <button type="button" class="btn btn-warning m-3">
-                        <a href="/edit_profile/{{user.id}}">
-                            <span title="Add Friend" class="material-icons" style="color: black">edit</span>
-                        </a>
-                    </button>
+                <button type="button" class="btn btn-warning m-3">
+                    <a href="/edit_profile/{{user.id}}">
+                        <span title="Add Friend" class="material-icons" style="color: black">edit</span>
+                    </a>
+                </button>
 
-                </div>
 
-                <div class="col my-5">
+
+                <!-- <div class="col my-5">
                     <h6>Rules</h6>
                     <ul class="list-group">
                         {% for rule in rules %}
                         <li class="list-group-item">(rule.rule)</li>
                         {% endfor %}
                     </ul>
-                </div>
+                </div> -->
 
                 <!-- user regulators -->
-                <div class="col my-5">
+                <!-- <div class="col my-5">
                     <h6>Regulators</h6>
                     <ul class="list-group">
                         {% for regulator in regulators %}
                         <li class="list-group-item">(user.regulators)</li>
                         {% endfor %}
                     </ul>
-                </div>
+                </div> -->
 
                 <!-- user friends -->
-                <div class="col my-5">
+                <!-- <div class="col my-5">
                     <h6>Friends</h6>
-                    <ul class="list-group">
+                    <div>
+                        <span class="badge bg-warning text-dark">Friends (friend.count)</span>
+                    </div> -->
+                <!-- <ul class="list-group">
                         (for friend in friends)
                         <li class="list-group-item">(user.friends)</li>
                         (endfor)
-                    </ul>
+                    </ul> -->
+            </div>
+
+            <!-- column for quotes -->
+            <div class="col  m-2">
+                <h4 class="text-center">Quotes</h4>
+                {% for quote in quotes %}
+                <div class="card m-3">
+                    <div class="card-header">
+                        {{quote.updated_at}}
+                    </div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <p>{{quote.the_quote}}</p>
+                            <footer class="blockquote-footer">{{quote.quote_author}}</footer>
+                        </blockquote>
+
+                        <!-- <div class="text-center">
+                            <button class="btn btn-warning m-2 ">
+                                <a href="/delete-quotey/{{quote.id}}">
+                                    <span class="material-icons" style="color: black;">delete</span>
+                                </a>
+                            </button>
+                        </div> -->
+
+
+
+                    </div>
+
+
+
                 </div>
+                {% endfor %}
+
+                <!-- column for journal entries -->
+
+
 
             </div>
-          <!-- column for quotes -->
-          <div class="col  m-2" >
-            <h4 class="text-center">Quotes</h4>
-            {% for quote in quotes %}
-            <div class="card m-3">
-                <div class="card-header">
-                    {{quote.updated_at}}
-                </div>
-                <div class="card-body">
-                    <blockquote class="blockquote mb-0">
-                        <p>{{quote.the_quote}}</p>
-                        <footer class="blockquote-footer">{{quote.quote_author}}</footer>
-                    </blockquote>
+            <div class="col  m-2">
+                <h4 class="text-center">Journal Entries</h4>
+                {% for entry in journal_entries %}
+                <div class="card text-center m-2">
 
-                    <div class="text-center">
-                        <button class="btn btn-warning m-2 ">
-                            <a href="/delete-quotey/{{quote.id}}" >
+                    <div class="card-body">
+                        <p class="card-text">{{entry.entry}}</p>
+                        <!-- <button class="btn btn-warning m-3">
+                            <a href="/delete-entry/{{entry.id}}">
                                 <span class="material-icons" style="color: black;">delete</span>
                             </a>
-                        </button>
+                        </button> -->
+
                     </div>
-                    
-
-                   
+                    <div class="card-footer text-muted">
+                        {{entry.updated_at}}
+                    </div>
                 </div>
-                
-
-
+                {% endfor %}
             </div>
-            {% endfor %}
-
-        </div>
-
-        <!-- column for journal entries -->
-
-        <div class="col  m-2" >
-            <h4 class="text-center">Journal Entries</h4>
-            {% for entry in journal_entries %}
-            <div class="card text-center m-2">
-
-                <div class="card-body">
-                    <p class="card-text">{{entry.entry}}</p>
-                    <button class="btn btn-warning m-3">
-                        <a href="/delete-entry/{{entry.id}}">
-                            <span class="material-icons" style="color: black;">delete</span>
-                        </a>
-                    </button>
-                    
-                </div>
-                <div class="card-footer text-muted">
-                    {{entry.updated_at}}
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-
 
 
         </div>

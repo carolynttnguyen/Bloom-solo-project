@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
 import re
 import bcrypt
 
@@ -74,10 +73,10 @@ class Chat_rules(models.Model):
 #     updated_at = models.DateTimeField(auto_now = True)
 
 
-class Regulators(models.Model):
-    user = models.ForeignKey(Users, related_name='regulators', on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now = True)
+# class Regulators(models.Model):
+#     user = models.ForeignKey(Users, related_name='regulators', on_delete=models.CASCADE)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now = True)
 
 
 class Journal_Entires(models.Model):
@@ -111,11 +110,11 @@ class Intentions (models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now = True)
 
-class Comments(models.Model):
-    user = models.ForeignKey(Users, related_name='comment', on_delete=models.CASCADE)
-    picture = models.ForeignKey(Users, related_name='picture_comment', on_delete=models.CASCADE)
-    quote = models.ForeignKey(Users, related_name='quote_comment', on_delete=models.CASCADE)
-    journal_entry = models.ForeignKey(Users, related_name='entry_comment', on_delete=models.CASCADE)
-    comment = models.CharField(max_length=255)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now = True)
+# class Comments(models.Model):
+#     user = models.ForeignKey(Users, related_name='comment', on_delete=models.CASCADE)
+#     picture = models.ForeignKey(Users, related_name='picture_comment', on_delete=models.CASCADE)
+#     quote = models.ForeignKey(Users, related_name='quote_comment', on_delete=models.CASCADE)
+#     journal_entry = models.ForeignKey(Users, related_name='entry_comment', on_delete=models.CASCADE)
+#     comment = models.CharField(max_length=255)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now = True)

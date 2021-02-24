@@ -1,0 +1,10 @@
+asgiref==3.3.1
+bcrypt==3.2.0
+cffi==1.14.5
+Django==3.1.7
+django-friendship==1.9.1
+pycparser==2.20
+pytz==2021.1
+regex==2020.11.13
+six==1.15.0
+sqlparse==0.4.1
