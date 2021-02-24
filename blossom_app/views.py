@@ -70,7 +70,7 @@ def create_user(request):
     
 
 def show_bloomboard(request):
-    if request.method=='POST':
+    if 'id' not in request.session:
         return redirect('/')
     # fetch User's personal data - reason, quote, post
     # fetch user's friends data- all post 
@@ -78,10 +78,10 @@ def show_bloomboard(request):
     context = {
         'current_user': current_user,
         'current_user_entries': Journal_Entires.objects.filter(user=current_user),
-        # 'current_user_quotes': Quotes.objects.filter(user=current_user),
+        'current_user_quotes': Quotes.objects.filter(user=current_user),
         # 'user_friends': Friends.objects.filter(user=current_user),
-        'other_user_entries': Journal_Entires.objects.exclude(user=current_user),
-        # 'quotes': Quotes.objects.all().filter("-created_at")
+        'entries': Journal_Entires.objects.all(),
+        'quotes': Quotes.objects.all()
         }
     return render(request, 'bloomboard.html', context)
 
@@ -122,12 +122,12 @@ def edit_entry(request, entryId, userId):
         updated_entry = Journal_Entires.objects.get(id=entryId)
         updated_entry.entry = request.POST['updated_entry']
         updated_entry.save()
-        return redirect('/profile/{{userId}}')
-    return redirect('/profile/{{userId}}')
-
-def edit_quote(request, quoteId):
-    if request.method=='GET':
         return redirect('/profile')
+    return redirect('/profile')
+
+def edit_quote(request, quoteId, userId):
+    # if request.method=='GET':
+    #     return redirect('/profile/{{userId}}')
     updated_quote = Quotes.objects.get(id=quoteId)
     updated_quote.the_quote = request.POST['updated_quote']
     updated_quote.the_quote = request.POST['updated_quote_author']
