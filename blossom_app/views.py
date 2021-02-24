@@ -70,31 +70,45 @@ def create_user(request):
     
 
 def show_bloomboard(request):
+    if request.method=='POST':
+        return redirect('/')
     # fetch User's personal data - reason, quote, post
     # fetch user's friends data- all post 
-    if request.method =="GET":
-        current_user = Users.objects.get(id=request.session['user_id'])
-        context = {
-            'current_user': current_user,
-            # 'current_user_entries': Journal_Entires.objects.filter(user=current_user),
-            # 'current_user_quotes': Quotes.objects.filter(user=current_user),
-            # 'user_friends': Friends.objects.filter(user=current_user),
-            'entries': Journal_Entires.objects.all().order_by("-created_at"),
-            # 'quotes': Quotes.objects.all().filter("-created_at")
-            }
-        return render(request, 'bloomboard.html', context)
-
-def profile(request):
-    if request.method=="GET":
-        # users-quotes, journal entries, rules, regulators, reason
-        context = {
-            
+    current_user = Users.objects.get(id=request.session['user_id'])
+    context = {
+        'current_user': current_user,
+        'current_user_entries': Journal_Entires.objects.filter(user=current_user),
+        # 'current_user_quotes': Quotes.objects.filter(user=current_user),
+        # 'user_friends': Friends.objects.filter(user=current_user),
+        'other_user_entries': Journal_Entires.objects.exclude(user=current_user),
+        # 'quotes': Quotes.objects.all().filter("-created_at")
         }
-    return render(request, 'bloom_profile.html', context)
+    return render(request, 'bloomboard.html', context)
 
-def edit_profile(request):
+def profile(request, userId):
+    if request.method =="GET":
+        # users-quotes, journal entries, rules, regulators, reason
+        current_user = Users.objects.get(id=userId)
+        context = {
+            'quotes': Quotes.objects.filter(user=current_user ),
+            'journal_entries':Journal_Entires.objects.filter(user=current_user ),
+            'rules': Chat_rules.objects.filter(rulecreator=current_user ),
+            'regulators': Regulators.objects.filter(user=current_user ),
+            'user': current_user 
+        }
+        return render(request, 'bloom_profile.html', context)
+    return redirect('/bloomboard')
+
+def edit_profile(request, userId):
     if request.method =='GET':
-        context = {}
+        current_user = Users.objects.get(id=userId)
+        context = {
+            'quotes': Quotes.objects.filter(user=current_user ),
+            'journal_entries':Journal_Entires.objects.filter(user=current_user ),
+            'rules': Chat_rules.objects.filter(rulecreator=current_user ),
+            'regulators': Regulators.objects.filter(user=current_user ),
+            'user': current_user 
+        }
         return render(request, 'edit_profile.html', context)
     else:
         # update & save changes rules, regulators, quote, reason, rules
@@ -116,7 +130,7 @@ def rules(request, userId):
 
 def journal_entry(request):
     if request.method =='POST':
-        new_intention = Journal_Entries.objects.create(
+        new_intention = Journal_Entires.objects.create(
             entry = request.POST['entry'],
             user = Users.objects.get(id = request.session['user_id'])
         )
@@ -161,6 +175,18 @@ def delete_goal(request, goalId):
     delete_goal= Goals.objects.get(id=goalId)
     delete_goal.delete()
     return redirect('/checklist')
+
+def delete_entry(request,entryId,userId):
+    # userId= userId
+    delete_entry= Journal_Entires.objects.get(id=entryId)
+    delete_entry.delete()
+    return redirect('/edit_profile/{{userId}}')
+
+def delete_quote(request,quoteId,userId):
+    # userId= userId
+    delete_quote= Quotes.objects.get(id=quoteId)
+    delete_quote.delete()
+    return redirect('/edit_profile/{{userId}}')
 
 def logout(request):
     request.session.clear()

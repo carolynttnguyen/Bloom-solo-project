@@ -35,7 +35,7 @@
             <!-- button for profile -->
             <div class="col">
                 <button type="button" class="btn btn-warning m-3">
-                    <a href="/profile.{{user.id}}">
+                    <a href="/profile/{{request.session.user_id}}">
                         <span title="Profile" class="material-icons" style="color: black">assignment_ind</span>
                     </a>
                 </button>
@@ -93,11 +93,11 @@
                 </div>
             </div>
 
-            <!-- navbar button journal entry -->
+            <!-- navbar button create journal entry -->
             <div class="col">
                 <!-- trigger button for modal -->
                 <button title="Create a Journal Entry" type="button" class="btn btn-warning m-3" data-toggle="modal" data-target="#exampleModal">
-                    <span class="material-icons">create</span>
+                    <span class="material-icons">post_add</span>
                 </button>
 
                 <!-- modal -->
@@ -136,7 +136,7 @@
             <div class="col">
                 <!-- trigger button for modal -->
                 <button title="Add an Intention" type="button" class="btn btn-warning m-3" data-toggle="modal" data-target="#exampleModal4">
-                    <span class="material-icons">flare</span>
+                    <span class="material-icons">self_improvement</span>
                 </button>
 
                 <!-- modal -->

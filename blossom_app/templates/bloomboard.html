@@ -2,23 +2,23 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
-    crossorigin="anonymous"></script>
-  <title>Bloomboard</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        crossorigin="anonymous"></script>
+    <title>Bloomboard</title>
 </head>
 
 <body>
     <div class="collapse bg-dark" id="navbar">
         <!-- welcome message -->
         <div class="bg-dark p-4">
-            <span class="text-muted">Live your life with Intentions.</span>
+            <span class="text-muted">Be Kind to Yourself & Others</span>
         </div>
 
         <div class="row">
@@ -34,7 +34,7 @@
             <!-- button for profile -->
             <div class="col">
                 <button type="button" class="btn btn-warning m-3">
-                    <a href="/profile.{{user.id}}">
+                    <a href="/profile/{{request.session.user_id}}">
                         <span title="Profile" class="material-icons" style="color: black">assignment_ind</span>
                     </a>
                 </button>
@@ -95,8 +95,9 @@
             <!-- navbar button journal entry -->
             <div class="col">
                 <!-- trigger button for modal -->
-                <button title="Create a Journal Entry" type="button" class="btn btn-warning m-3" data-toggle="modal" data-target="#exampleModal">
-                    <span class="material-icons">create</span>
+                <button title="Create a Journal Entry" type="button" class="btn btn-warning m-3" data-toggle="modal"
+                    data-target="#exampleModal">
+                    <span class="material-icons">post_add</span>
                 </button>
 
                 <!-- modal -->
@@ -134,8 +135,9 @@
             <!-- navbar button add Intention -->
             <div class="col">
                 <!-- trigger button for modal -->
-                <button title="Add an Intention" type="button" class="btn btn-warning m-3" data-toggle="modal" data-target="#exampleModal4">
-                    <span class="material-icons">flare</span>
+                <button title="Add an Intention" type="button" class="btn btn-warning m-3" data-toggle="modal"
+                    data-target="#exampleModal4">
+                    <span class="material-icons">self_improvement</span>
                 </button>
 
                 <!-- modal -->
@@ -214,7 +216,7 @@
             <div class="col">
                 <button type="button" class="btn btn-warning m-3">
                     <a href="/logout">
-                        <span  title="Logout"class="material-icons" style="color: black">logout</span>
+                        <span title="Logout" class="material-icons" style="color: black">logout</span>
                     </a>
                 </button>
             </div>
@@ -222,71 +224,105 @@
     </div>
 
 
-  <!-- quote in navbar -->
-  <nav class="navbar navbar-dark bg-dark">
-    <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
-        aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+    <!-- quote in navbar -->
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
+                aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-      <figure class="text-center mx-auto">
-        <blockquote class="blockquote text-warning">
-          <p>{{current_user.personal_quote}}</p>
-        </blockquote>
-        <figcaption class="blockquote-footer">
-          {{current_user.first_name}} {{current_user.last_name}}
-        </figcaption>
-      </figure>
-    </div>
-  </nav>
-  <!-- end of navbar -->
-
-  <!-- Personal Goal Display -->
-  <header class="m-3">
-    <div class="card text-center mx-auto" style="width: 800px; border-color: white;">
-      <div class="card-body">
-        <h6 class="card-subtitle mb-2 text-muted">
-          Daily Reminder you're taking steps to-
-        </h6>
-        <p class="card-text" style="font-size: 25px">
-          {{current_user.reasons}}
-        </p>
-      </div>
-    </div>
-  </header>
-  <!-- end of display -->
-
-  <!-- container for all user posted content -->
-  <div id="container-fluid">
-    {% for entry in entries %}
-
-    <div class="card mb-3">
-      <div class="row g-0">
-        <div class="col-sm-4">
-          <!-- <img src="..." alt="..." /><br /> -->
-          <h6>{{entry.user.username}}}</h6>
-          <a href="/user_rules">Rules</a>
+            <figure class="text-center mx-auto">
+                <blockquote class="blockquote text-warning">
+                    <p>{{current_user.personal_quote}}</p>
+                </blockquote>
+                <figcaption class="blockquote-footer">
+                    {{current_user.first_name}} {{current_user.last_name}}
+                </figcaption>
+            </figure>
         </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <p class="card-text">{{entry.entry}}</p>
-            <p class="card-text">
-              <small class="text-muted">Last updated 3 mins ago</small>
-            </p>
-          </div>
+    </nav>
+    <!-- end of navbar -->
+
+    <!-- Personal Goal Display -->
+    <header class="m-3">
+        <div class="card text-center mx-auto" style="width: 800px; border-color: white;">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted">
+                    Daily Reminder you're taking steps to-
+                </h6>
+                <p class="card-text" style="font-size: 25px">
+                    {{current_user.reasons}}
+                </p>
+            </div>
         </div>
-      </div>
+    </header>
+    <!-- end of display -->
+
+    <!-- container for all user posted content -->
+    <div class="container-fluid mx-auto m-4">
+
+        <div class="row">
+
+            <!-- user post -->
+            <div class="col">
+                {% for user_entry in current_user_entries %}
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-sm-4">
+                            <a href="/user_rules"  class="text-decoration-none" style="color:black;">{{user_entry.user.username}}</a> <br>
+
+                            <a href="/user_rules">Rules</a>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <p class="card-text">{{user_entry.entry}}</p>
+                                <p class="card-text">
+                                    <small class="text-muted">{{user_entry.updated_at}}</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- other user post -->
+            <div class="col">
+                {% for other_entry in other_user_entries %}
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-sm-4">
+                            <h6>{{other_entry.user.username}}</h6>
+                            <a href="/user_rules">Rules</a>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <p class="card-text">{{other_entry.entry}}</p>
+                                <p class="card-text">
+                                    <small class="text-muted">{{other_entry.updated_at}}</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+
+        </div>
     </div>
-    {% endfor %}
-  </div>
+
 </body>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
-  integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+    crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
-  integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+    crossorigin="anonymous"></script>
 
 </html>
