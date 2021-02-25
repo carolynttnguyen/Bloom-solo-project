@@ -9,9 +9,9 @@
 </head>
 
 <body>
-    <div class="container-fluid">
+    <div class="container-fluid my-auto ">
 
-        <h2 class="display-6">Login</h2>
+        <h2 class="display-6 mx-auto my-auto text-center">Login</h2>
 
          <!-- errors message -->
          {% if messages %}
@@ -24,16 +24,16 @@
     
 
         <!-- login form  -->
-        <form action="/login" method="post">
+        <form action="/login" class="mx-auto my-auto" style="width:35%;" method="post">
             {% csrf_token %}
-            <div class="form-group"> 
-                <label for="username">Username</label>
-                <input type="text" name="log_username">
+            <div class="form-group mb-3 "> 
+                <label for="username" class='form-label'>Username</label>
+                <input type="text"  class="form-control" name="log_username">
             </div>
 
-            <div class="form-group">
-                <label for="pw">Password</label>
-                <input type="password" name="log_password">
+            <div class="form-group mb-3">
+                <label for="pw"  class='form-label'>Password</label>
+                <input type="password" class="form-control" name="log_password">
     
             </div>
 

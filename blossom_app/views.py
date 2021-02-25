@@ -70,8 +70,8 @@ def create_user(request):
     
 
 def show_bloomboard(request):
-    if 'id' not in request.session:
-        return redirect('/')
+    # if 'id' not in request.session:
+    #     return redirect('/')
     # fetch User's personal data - reason, quote, post
     # fetch user's friends data- all post 
     current_user = Users.objects.get(id=request.session['user_id'])
