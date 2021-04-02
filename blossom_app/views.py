@@ -1,12 +1,21 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import *
+from .forms import *
 
 def index(request):
-    return render(request, 'login.html')
+    form = loginForm()
+    context = {
+        'logForm': form,
+    }
+    return render(request, 'login.html', context)
 
 def register(request):
-    return render(request, 'register.html')
+    form = registrationForm()
+    context ={
+        'regForm': form,
+    }
+    return render(request, 'register.html', context)
 
 def login(request):
     if "user_id" in request.session:

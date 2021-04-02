@@ -48,7 +48,7 @@ class Users (models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     username = models.CharField(max_length=30)
-    email = models.EmailField(max_length=50)
+    email = models.EmailField()
     password =  models.CharField(max_length=70)
     reasons = models.TextField()
     personal_quote = models.TextField()
